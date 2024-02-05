@@ -1,0 +1,20 @@
+rs.sonar_begin(3)
+
+while(True):
+    t.sleep(0.5)
+    sonar = rs.sonar_read(3)
+    print(sonar)
+    
+    if sonar== 0 or sonar == 508:
+        print("ERROR")
+        continue
+    if sonar>=0 and sonar<10:
+        rs.set_rgb_led_red(2)
+        rs.set_rgb_led_on(2)
+        t.sleep(0.5)
+        rs.set_rgb_led_off(2)
+    elif sonar>=10 and sonar<25:
+        rs.set_rgb_led_yellow(2)
+        rs.set_rgb_led_on(2)
+        t.sleep(0.5)
+        rs.set_rgb_led_off(2)
