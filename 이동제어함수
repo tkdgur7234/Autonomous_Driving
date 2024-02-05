@@ -1,0 +1,115 @@
+def forward():  # 전진
+    rs.motor_write(0,1,15)
+    rs.motor_write(1,0,15)
+    rs.motor_write(2,1,15)
+    rs.motor_write(3,0,15)
+    
+def back():  # 후진
+    rs.motor_write(0,0,15)
+    rs.motor_write(1,1,15)
+    rs.motor_write(2,0,15)
+    rs.motor_write(3,1,15)
+    
+def run_left():  # 좌측 직선이동
+    rs.motor_write(0,1,15)
+    rs.motor_write(1,1,15)
+    rs.motor_write(2,0,15)
+    rs.motor_write(3,0,15)
+    
+def run_right():  # 우측 직선이동
+    rs.motor_write(0,0,15)
+    rs.motor_write(1,0,15)
+    rs.motor_write(2,1,15)
+    rs.motor_write(3,1,15)
+    
+def diagonal_frontRight():  # 우측 대각선 전진
+    #rs.motor_write(0,0,7)
+    rs.motor_write(1,0,15)
+    rs.motor_write(2,1,15)
+    #rs.motor_write(3,0,7)
+
+def diagonal_frontLeft():  # 좌측 대각선 전진
+    rs.motor_write(0,1,15)
+    #rs.motor_write(1,0,15)
+    #rs.motor_write(2,1,15)
+    rs.motor_write(3,0,15)
+    
+def diagonal_backRight():  # 우측 대각선 후진
+    rs.motor_write(0,0,15)
+    #rs.motor_write(1,0,15)
+    #rs.motor_write(2,1,15)
+    rs.motor_write(3,1,15)
+    
+def diagonal_backLeft():  # 좌측 대각선 후진
+    #rs.motor_write(0,0,7)
+    rs.motor_write(1,1,15)
+    rs.motor_write(2,0,15)
+    #rs.motor_write(3,0,7)
+        
+def turn_right():  # 우회전
+    rs.motor_write(0,1,15)
+    rs.motor_write(1,1,15)
+    rs.motor_write(2,1,15)
+    rs.motor_write(3,0,15)
+    
+def turn_left():  # 좌회전
+    rs.motor_write(0,0,15)
+    rs.motor_write(1,0,15)
+    rs.motor_write(2,1,15)
+    rs.motor_write(3,0,15)
+    
+def stop():  # 멈춤
+    rs.motor_stop(0)
+    rs.motor_stop(1)
+    rs.motor_stop(2)
+    rs.motor_stop(3)
+
+forward()
+t.sleep(1)
+stop()
+t.sleep(1)
+
+back()
+t.sleep(1)
+stop()
+t.sleep(1)
+
+run_left()
+t.sleep(1)
+stop()
+t.sleep(1)
+
+run_right()
+t.sleep(1)
+stop()
+t.sleep(1)
+
+diagonal_frontRight()
+t.sleep(1)
+stop()
+t.sleep(1)
+
+diagonal_frontLeft()
+t.sleep(1)
+stop()
+t.sleep(1)
+
+diagonal_backRight()
+t.sleep(1)
+stop()
+t.sleep(1)
+
+diagonal_backLeft()
+t.sleep(1)
+stop()
+t.sleep(1)
+
+turn_right()
+t.sleep(1)
+stop()
+t.sleep(1)
+
+turn_left()
+t.sleep(1)
+stop()
+t.sleep(1)
