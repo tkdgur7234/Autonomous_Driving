@@ -1,0 +1,12 @@
+rs.set_rgb_led_color(2, 100,100,100)
+
+# 불빛 무한 코드
+while(True
+    # 색상설정
+    rs.set_rgb_led_random(2)
+    # rgb on
+    rs.set_rgb_led_on(2)
+    t.sleep(1)
+    # rgb off
+    rs.set_rgb_led_off(2)
+    t.sleep(1)
