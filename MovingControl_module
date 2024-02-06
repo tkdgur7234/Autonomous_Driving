@@ -1,3 +1,9 @@
+from RobokitRS.RobokitRS import *
+import time as t
+
+rs=RobokitRS()
+print("연결완료")
+
 def forward():  # 전진
     rs.motor_write(0,1,15)
     rs.motor_write(1,0,15)
