@@ -1,2 +1,43 @@
+import import_ipynb
+from moving_control import *
+
+rs.port_open("COM9")
+
 # 초기 '앞' 방향 설정
 gyro_begin()
+rs.set_gyro_default_position()
+
+# 방향이 틀어졌을때 전진 각도로 복구 후 전진
+while True:
+    z = rs.gyro_read(GyroDataType.ANGLE_Z)
+    print(z)
+    t.sleep(0.1)
+    
+    if z>=-5 and z<=5:
+        forward(15)
+        t.sleep(0.2)
+    
+    elif z<-5:
+        stop()
+        t.sleep(1)
+        while z<-2:
+            turn_right(2)
+            t.sleep(0.05)
+            z = rs.gyro_read(GyroDataType.ANGLE_Z)
+            print("1:",z)
+        stop()
+        t.sleep(0.2)
+       
+        print("왼쪽완료")
+            
+    elif z>5:
+        stop()
+        t.sleep(1)
+        while z>2:
+            turn_left(2)
+            t.sleep(0.05)
+            z = rs.gyro_read(GyroDataType.ANGLE_Z)
+            print("2:",z)
+        stop()
+        t.sleep(0.2)
+        print("오른쪽완료")
