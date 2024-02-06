@@ -1,1 +1,79 @@
-<h2>asdf</h2>
+# url 불러오기를 위한 import
+import requests
+# 데이터 분석을 위한 판다스 불러오기
+import pandas as pd
+
+# 사용할 데이터집합
+url = 'http://data.ex.co.kr/openapi/odtraffic/trafficAmountByUnit'
+# 발급받은 인증키
+key = "1374386795"
+
+# 파라미터들 
+params = {'key' : key, 'type':'xml',
+         'sumTmUnitTypeCode':'3',
+         'stdHour':'15', 'numOfRows':'100',
+         'pageNo':'1'}
+# response 변수에 url의 우리가 필요한 파라미터들을 받음
+response = requests.get(url, params=params)
+response.status_code  # 200으로 출력되면 연결됨을 의미
+# 받은 파라미터들 
+data = str(response.content, "utf-8")
+data
+# 파싱 절차 = 대량 데이터를 보기 쉽게 쪼갬
+import xml.etree.ElementTree as ET
+tree = ET.fromstring(data)
+tree    # 객체가 반환된다
+list(tree)    # tree를 리스트화
+
+tree[5][2]    # 트리의 5번 폴더의 2번 파일
+new_data = tree[5]    # 트리의 5번 폴더를 new_data에 저장, new_data는 리스트
+print(len(new_data))
+print(new_data)
+
+for i in range(len(new_data)):    # new_data의 길이기반으로 반복 
+    print(new_data[i].tag,new_data[i].text, i)    # 
+
+df = []
+# 0~2와 102~105의 정보는 필요없음
+for a in range(3,102):
+    temp = []
+    # 4번(입구출구), 11번(교통량), 13번(톨게이트) 열만 사용
+    for b in [4,11,13]:
+        temp.append(tree[a][b].text)
+    df.append(temp)
+df
+
+# 데이터프레임으로 만들기
+df = pd.DataFrame(df)
+df.head()    # 상위 5개만 보여줌
+
+#데이터프레임 열이름 바꾸기
+df.columns = ['exit', 'volume', 'toll']
+df.head(3)
+
+# df의 데이터타입을 확인, 오브젝트형이므로 int로 바꿈
+df.info()
+# volume열은 합계를 내기 위해 정수형으로 변형
+df['volume']=df['volume'].astype(int)
+
+# 출구만 추려내기
+# iloc = df 행,열을 기반으로 특정 데이터 선택 가능
+# df[행, 열]
+df = df[df.iloc[:,0] == '출구']
+df
+
+# traffic 변수에 toll열을 기준으로 volume안의 값을 모두 더해서 그룹화
+traffic = df.groupby('toll')['volume'].sum()
+df_traffic = pd.DataFrame(traffic)
+df_traffic
+
+# 그래프화
+import plotly.express as px  # 한글 지원하는 게 장점
+
+fig = px.bar(
+    df_traffic,
+    y="volume",
+    width=800,
+    height=450,
+    title='톨게이트별 교통량')
+fig
