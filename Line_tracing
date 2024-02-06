@@ -1,0 +1,32 @@
+l = rs.analog_read(0)
+r = rs.analog_read(1)
+
+while(True):
+    t.sleep(0.1)
+    l = rs.analog_read(0)
+    r = rs.analog_read(1)
+    print(l,r)
+    
+    if l<100 and r<100:
+        stop()
+        break
+        
+    elif l<100 and r>=100:
+        l = rs.analog_read(0)
+        
+        while l<100:
+            l = rs.analog_read(0)
+            turn_left(5)
+            t.sleep(0.1)
+        stop()
+        
+    elif l>=100 and r<100:
+        r = rs.analog_read(1)
+        
+        while r<100:
+            r = rs.analog_read(1)
+            turn_right(5)
+            t.sleep(0.1)          
+        stop()
+
+    forward(5)
